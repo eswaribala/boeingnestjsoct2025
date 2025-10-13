@@ -3,8 +3,9 @@ nest --version
 # Install Nx globally
 npm install -g nx
 From node js cmd
+ npm i -g pnpm
  corepack enable
-corepack prepare pnpm@9 - -activate
+corepack prepare pnpm@9 --activate
 pnpm -v
 1) Create Nx Workspace (Nest preset)
 npx --yes create-nx-workspace@latest boeing-banking --preset=nest --appName=api-gateway --workspaceType=integrated --packageManager=npm --e2eTestRunner=none --unitTestRunner=jest --nxCloud=skip --skipGit --interactive=false
