@@ -10,10 +10,8 @@ import { Body, Get, Param } from '@nestjs/common';
 @Controller('customers')
 export class CustomersController {
 
-
-  //DI
   private customersService: CustomersService;
-
+  //DI
   constructor(customersService: CustomersService) {
     this.customersService = customersService;
   }
