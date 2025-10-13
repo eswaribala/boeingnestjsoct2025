@@ -23,6 +23,10 @@ npx -p @nestjs/cli nest g module app/customers
 npx -p @nestjs/cli nest g service app/customers --flat
 npx -p @nestjs/cli nest g controller app/customers --flat
 
+#install swagger lib
+npm i @nestjs/swagger swagger-ui-express class-validator class-transformer
+
+
 
 
 
