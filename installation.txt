@@ -16,5 +16,13 @@ npx nx serve api-gateway
 npx nx show projects
 4) create customer-api
 npx nx g @nx/nest:app customer-api --e2eTestRunner=none
+5) scaffolding
+Scaffold the “customers” feature
+cd customer-api
+npx -p @nestjs/cli nest g module app/customers
+npx -p @nestjs/cli nest g service app/customers --flat
+npx -p @nestjs/cli nest g controller app/customers --flat
+
+
 
 
