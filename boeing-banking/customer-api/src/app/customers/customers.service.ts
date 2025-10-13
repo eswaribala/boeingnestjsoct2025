@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from './dtos/customer/create-customer.dto';
 import { CustomerResponseDto } from './dtos/customer/response-customer.dto';
 import { Customer } from './entities/customer.entity';
+import { UpdateCustomerDto } from './dtos/customer/update-customer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -36,5 +37,34 @@ export class CustomersService {
     const customerResponseDto=new CustomerResponseDto();
     Object.assign(customerResponseDto,customer);
     return customerResponseDto;
+  }
+
+  updateCustomer(accountNo:number,updateCustomerDto:UpdateCustomerDto): CustomerResponseDto{
+    const customerIndex=this.customers.findIndex(c=>c.accountNo===accountNo);
+    if(customerIndex===-1) throw new Error('Customer not found');
+    const customer=this.customers[customerIndex];
+    customer.email=updateCustomerDto.email;
+    customer.phone=updateCustomerDto.phone;
+    if(updateCustomerDto.address){
+      customer.address.doorNo=updateCustomerDto.address.doorNo;
+      customer.address.street=updateCustomerDto.address.street;
+      customer.address.city=updateCustomerDto.address.city;
+      customer.address.state=updateCustomerDto.address.state;
+      customer.address.country=updateCustomerDto.address.country;
+      customer.address.zip=updateCustomerDto.address.zip;
+    }
+    const customerResponseDto=new CustomerResponseDto();
+    Object.assign(customerResponseDto,customer);
+    return customerResponseDto;
+  }
+
+  deleteCustomer(accountNo:number): boolean{
+    let customerStatus:boolean;
+    customerStatus=false;
+    const customerIndex=this.customers.findIndex(c=>c.accountNo===accountNo);
+    if(customerIndex===-1) throw new Error('Customer not found');
+    this.customers.splice(customerIndex,1);
+    customerStatus=true;
+    return customerStatus;
   }
 }
