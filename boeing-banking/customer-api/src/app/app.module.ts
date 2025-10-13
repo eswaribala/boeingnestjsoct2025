@@ -7,7 +7,7 @@ import { CustomersService } from './customers/customers.service';
 
 @Module({
   imports: [CustomersModule],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CustomersController],
+  providers: [AppService, CustomersService],
 })
 export class AppModule {}

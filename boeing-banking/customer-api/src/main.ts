@@ -10,24 +10,30 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+   // Global validation
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
-    transform: true,
-  }))
+    transform: true
+  }));
 
-  const config=new DocumentBuilder().setTitle('Customer API')
-  .setDescription('Customer API').setVersion('1.0').build();
+  // API versioning (optional)
+  // app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
 
-  const document=SwaggerModule.createDocument(app,config);
-  SwaggerModule.setup('docs',app,document);
-  const port = process.env.PORT || 3000;
+  // Swagger/OpenAPI
+  const config = new DocumentBuilder()
+    .setTitle('Customer API')
+    .setDescription('Boeing Insurance - Customer service')
+    .setVersion('1.0.0')
+    // .addBearerAuth() // uncomment if you add JWT later
+    .build();
+  const doc = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, doc);
+
+  const port = process.env.PORT || 3001;
   await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  // console.log(`Docs: http://localhost:${port}/docs`);
+   Logger.log(`REST:  http://localhost:${port}/docs`);
 }
 
 bootstrap();

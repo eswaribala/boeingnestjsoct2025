@@ -1,6 +1,6 @@
 import { AddressResponseDto } from "../address/response-address.dto";
 import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
 export class CustomerResponseDto{
   @Expose()
   @ApiProperty()

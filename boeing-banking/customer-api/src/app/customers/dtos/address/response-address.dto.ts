@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer/types/decorators/expose.decorator";
+import { Expose} from 'class-transformer';
 
 export  class AddressResponseDto{
   @Expose()
