@@ -9,3 +9,6 @@ corepack prepare pnpm@9 --activate
 pnpm -v
 1) Create Nx Workspace (Nest preset)
 npx --yes create-nx-workspace@latest boeing-banking --preset=nest --appName=api-gateway --workspaceType=integrated --packageManager=npm --e2eTestRunner=none --unitTestRunner=jest --nxCloud=skip --skipGit --interactive=false
+2) run api gateway
+#be @ boeing-baking
+npx nx serve api-gateway
