@@ -1,11 +1,11 @@
 import { Controller, Post } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CustomerResponseDto } from './dtos/customer/response-customer.dto';
-import { CreateCustomerDto } from './dtos/customer/create-customer.dto';
+import { CreateCustomerDto} from './dtos/customer/create-customer.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Get, Param } from '@nestjs/common';
-
+import { Body, Get, Param,Delete,Patch } from '@nestjs/common';
+import { UpdateCustomerDto } from './dtos/customer/update-customer.dto';
 @ApiTags('customers')
 @Controller('customers')
 export class CustomersController {
@@ -35,6 +35,23 @@ export class CustomersController {
   @ApiResponse({ status: 200, description: 'The customer has been successfully retrieved.', type: CustomerResponseDto })
   getCustomerByAccountNo(@Param('accountNo') accountNo: number): CustomerResponseDto {
     return this.customersService.getCustomerByAccountNo(accountNo);
+  }
+
+
+  @Patch(':accountNo')
+  @ApiOperation({ summary: 'Update a customer by account number' })
+  @ApiResponse({ status: 200, description: 'The customer has been successfully updated.', type: CustomerResponseDto })
+  updateCustomer(@Param('accountNo') accountNo: number, @Body() updateCustomerDto: UpdateCustomerDto): CustomerResponseDto {
+    return this.customersService.updateCustomer(accountNo, updateCustomerDto);
+  }
+
+  @Delete(':accountNo')
+  @ApiOperation({ summary: 'Delete a customer by account number' })
+  @ApiResponse({ status: 200, description: 'The customer has been successfully deleted.' })
+  deleteCustomer(@Param('accountNo') accountNo: number): string {
+    if(this.customersService.deleteCustomer(accountNo))
+      return 'Customer deleted successfully';
+    return 'Customer not found';
   }
 
 }
