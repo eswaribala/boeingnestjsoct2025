@@ -20,7 +20,7 @@ export class CreateCustomerDto{
     @ApiProperty({ example: 'john.doe@example.com' })
     email: string;
     @IsNotEmpty()
-    @IsPhoneNumber()
+    @Matches(/^\d{3}-\d{3}-\d{4}$/, { message: 'Phone number must be in the format XXX-XXX-XXXX' })
     @ApiProperty({ example: '123-456-7890' })
     phone: string;
     address: CreateAddressDto;
