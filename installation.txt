@@ -12,3 +12,5 @@ npx --yes create-nx-workspace@latest boeing-banking --preset=nest --appName=api-
 2) run api gateway
 #be @ boeing-baking
 npx nx serve api-gateway
+3) to show the projects
+npx nx show projects
