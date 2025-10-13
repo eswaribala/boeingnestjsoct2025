@@ -1,17 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { CreateAddressDto } from "../address/create-address.dto";
-import {  IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
+import {  IsEmail, IsNotEmpty, IsPhoneNumber, IsString, Matches } from "class-validator";
 export class CreateCustomerDto{
    @IsNotEmpty()
    @ApiProperty({ example: 123456 })
    accountNo: number;
    @IsNotEmpty()
    @IsString()
+   @Matches(/^[A-Za-z]{2,25}$/, { message: 'First name must contain only letters' })
     @ApiProperty({ example: 'John' })
     firstName: string;
     @IsNotEmpty()
     @IsString()
     @ApiProperty({ example: 'Doe' })
+    @Matches(/^[A-Za-z]{2,25}$/, { message: 'Last name must contain only letters' })
     lastName: string
     @IsNotEmpty()
     @IsEmail()
