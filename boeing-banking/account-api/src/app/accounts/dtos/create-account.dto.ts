@@ -3,7 +3,7 @@ import { Type } from "class-transformer";
 import { IsNumber, IsPositive, Max, Min } from "class-validator";
 import { Matches } from "class-validator";
 import { ValidateIf } from "class-validator";
-
+import { IsNotEmpty } from "class-validator";
 export enum AccountType {
   SAVINGS = 'SAVINGS',
   CURRENT = 'CURRENT'
@@ -24,9 +24,9 @@ export class CreateAccountDto {
   @IsPositive({message:'Running total must be a positive number'})
   @ApiProperty({example:5000,description:'Initial deposit amount, minimum is 100'})
   runningTotal: number;
-  @Type(() => Date)
-  @Matches(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/,{message:'Opening date must be in ISO 8601 format'} )
-  @ApiProperty({example:'2023-10-10T10:10:10.000Z',description:'Account opening date in ISO 8601 format'})
+  @IsNotEmpty()
+  @Matches(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/, { message: 'openDate must be in ISO 8601 format' })
+  @ApiProperty({ description: 'The account open date', example: '2023-01-01T00:00:00.000Z' })
   openingDate: Date;
   @Matches(/^(SAVINGS|CURRENT)$/,{message:'Account type must be SAVINGS or CURRENT'})
   @ApiProperty({example:'SAVINGS',description:'Type of account: SAVINGS or CURRENT'})

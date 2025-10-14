@@ -7,6 +7,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Account, AccountDocument } from './entities/account.entity';
 import { Model } from 'mongoose';
 import { AccountType } from './dtos/create-account.dto';
+import { SavingsAccount } from './entities/savings-account.entity';
+import { CurrentAccount } from './entities/current-account.entity';
 @Injectable()
 export class AccountsService implements IAccountsService {
 
@@ -44,8 +46,27 @@ export class AccountsService implements IAccountsService {
 
   async create(data: CreateAccountDto): Promise<ResponseAccountDto> {
     // Implementation here
-    const account = new Account();
-    Object.assign(account, data);
+    console.log('Creating account with data:', data);
+    let account;
+    if (data.accountType === AccountType.SAVINGS) {
+      account = new SavingsAccount();
+      account.accountNo = data.accountNo;
+      account.runningTotal = data.runningTotal;
+      account.openingDate = data.openingDate;
+      account.accountType = data.accountType;
+      account.interestRate = data.interestRate;
+    } else if (data.accountType === AccountType.CURRENT)   {
+      account = new CurrentAccount();
+      account.accountNo = data.accountNo;
+      account.runningTotal = data.runningTotal;
+      account.openingDate = data.openingDate;
+      account.accountType = data.accountType;
+      account.overdraftLimit = data.overdraftLimit;
+    }else {
+      account = new Account();
+      Object.assign(account, data);
+    }
+    console.log('Account entity to be saved:', account);
     const createdAccount = new this.accountModel(account);
     const res = await createdAccount.save();
     const responseAccountDto = new ResponseAccountDto();
