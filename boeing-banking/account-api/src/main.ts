@@ -25,7 +25,7 @@ async function bootstrap() {
   // Swagger/OpenAPI
   const config = new DocumentBuilder()
     .setTitle('Account API V1')
-    .setDescription('Boeing Insurance - Account service for V1')
+    .setDescription('Boeing Banking - Account service for V1')
     .setVersion('1.0.0')
     // .addBearerAuth() // uncomment if you add JWT later
     .build();
