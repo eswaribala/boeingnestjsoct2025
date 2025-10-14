@@ -2,6 +2,13 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsNumber, IsPositive, Max, Min } from "class-validator";
 import { Matches } from "class-validator";
+import { ValidateIf } from "class-validator";
+
+enum AccountType {
+  SAVINGS = 'SAVINGS',
+  CURRENT = 'CURRENT'
+}
+import { ApiPropertyOptional } from "@nestjs/swagger";
 export class CreateAccountDto {
   @IsNumber({allowInfinity:false,allowNaN:false},{message:'Account number must be a number'})
   @Type(() => Number)
@@ -24,4 +31,18 @@ export class CreateAccountDto {
   @Matches(/^(SAVINGS|CURRENT)$/,{message:'Account type must be SAVINGS or CURRENT'})
   @ApiProperty({example:'SAVINGS',description:'Type of account: SAVINGS or CURRENT'})
   accountType: 'SAVINGS' | 'CURRENT'
+
+   // Savings-only field
+  @ApiPropertyOptional({ example: 4.5, description: 'Required when accountType = savings' })
+  @ValidateIf(o => o.accountType === AccountType.SAVINGS)
+  @IsNumber()
+  @Min(0)
+  interestRate?: number;
+
+  // Current-only field
+  @ApiPropertyOptional({ example: 50000, description: 'Required when accountType = current' })
+  @ValidateIf(o => o.accountType === AccountType.CURRENT)
+  @IsNumber()
+  @Min(0)
+  overdraftLimit?: number;
 }

@@ -1,5 +1,7 @@
 import { Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Prop } from "@nestjs/mongoose";
+import { HydratedDocument } from "mongoose";
+export type AccountDocument = HydratedDocument<Account>;
 @Schema({ timestamps: false, versionKey: false,discriminatorKey: 'accountType',collection: 'accounts' })
 export class Account {
   @Prop({unique:true,required:true})
