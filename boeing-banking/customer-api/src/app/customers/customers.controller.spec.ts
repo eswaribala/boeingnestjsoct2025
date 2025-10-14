@@ -1,10 +1,12 @@
-/*
 import { Test, TestingModule } from '@nestjs/testing';
 import { CustomersController } from './customers.controller';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dtos/customer/create-customer.dto';
 import { UpdateCustomerDto } from './dtos/customer/update-customer.dto';
 import { CustomerResponseDto } from './dtos/customer/response-customer.dto';
+import { describe,beforeEach,afterEach,it} from '@jest/globals';
+import { expect } from '@jest/globals';
+import { jest } from '@jest/globals';
 
 describe('CustomersController', () => {
   let controller: CustomersController;
@@ -112,4 +114,3 @@ describe('CustomersController', () => {
     expect(result).toEqual('Customer not found');
   });
 });
-*/
