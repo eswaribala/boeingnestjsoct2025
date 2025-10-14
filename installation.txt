@@ -26,6 +26,12 @@ npx -p @nestjs/cli nest g controller app/customers --flat
 #install swagger lib
 npm i @nestjs/swagger swagger-ui-express class-validator class-transformer
 
+#install mongo dependencies
+
+npm i @nestjs/mongoose mongoose
+npm i class-validator class-transformer
+npm i dotenv
+
 
 
 
