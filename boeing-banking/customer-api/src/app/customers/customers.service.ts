@@ -3,6 +3,7 @@ import { CreateCustomerDto } from './dtos/customer/create-customer.dto';
 import { CustomerResponseDto } from './dtos/customer/response-customer.dto';
 import { Customer } from './entities/customer.entity';
 import { UpdateCustomerDto } from './dtos/customer/update-customer.dto';
+import { AddressResponseDto } from './dtos/address/response-address.dto';
 
 @Injectable()
 export class CustomersService {
@@ -13,9 +14,11 @@ export class CustomersService {
     const customer=new Customer();
     //dto to entity
     Object.assign(customer,createCustomerDto);
+
     this.customers.push(customer);
     //entity to dto
     const customerResponseDto=new CustomerResponseDto();
+
     Object.assign(customerResponseDto,customer);
     return customerResponseDto;
 
@@ -25,7 +28,9 @@ export class CustomersService {
     for(const customer of this.customers){
       const customerResponseDto=new CustomerResponseDto();
       //entity to dto
+
       Object.assign(customerResponseDto,customer);
+
       customerResponseDtos.push(customerResponseDto);
     }
     return customerResponseDtos;
@@ -35,6 +40,8 @@ export class CustomersService {
     const customer=this.customers.find(c=>c.accountNo===accountNo);
     if(!customer) throw new Error('Customer not found');
     const customerResponseDto=new CustomerResponseDto();
+    //entity to dto
+
     Object.assign(customerResponseDto,customer);
     return customerResponseDto;
   }
@@ -54,6 +61,7 @@ export class CustomersService {
       customer.address.zip=updateCustomerDto.address.zip;
     }
     const customerResponseDto=new CustomerResponseDto();
+
     Object.assign(customerResponseDto,customer);
     return customerResponseDto;
   }

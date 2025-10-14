@@ -1,0 +1,9 @@
+export const ApiProperty = () => () => undefined;
+export const ApiPropertyOptional = () => () => undefined;
+export const ApiTags = () => () => undefined;
+export const ApiResponse = () => () => undefined;
+export const ApiBearerAuth = () => () => undefined;
+export const ApiOperation = () => () => undefined;
+export const ApiParam = () => () => undefined;
+export const ApiQuery = () => () => undefined;
+export const ApiBody = () => () => undefined;

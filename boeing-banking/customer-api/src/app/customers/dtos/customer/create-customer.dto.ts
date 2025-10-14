@@ -23,5 +23,14 @@ export class CreateCustomerDto{
     @Matches(/^\d{3}-\d{3}-\d{4}$/, { message: 'Phone number must be in the format XXX-XXX-XXXX' })
     @ApiProperty({ example: '123-456-7890' })
     phone: string;
+    @IsNotEmpty()
+    @ApiProperty({ example: {
+        doorNo: '123',
+        street: 'Main St',
+        city: 'New York',
+        state: 'NY',
+        country: 'USA',
+        zip: '10001'
+    } })
     address: CreateAddressDto;
 }
