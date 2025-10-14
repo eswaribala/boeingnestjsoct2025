@@ -15,33 +15,32 @@ export class AccountsService implements IAccountsService {
 
   }
 
-  findAll(): Promise<ResponseAccountDto[]> {
+  async findAll(): Promise<ResponseAccountDto[]> {
     // Implementation here
-    const accounts=this.accountModel.find().exec();
-    return accounts.then((docs)=>{
-      return docs.map((doc)=>{
-        const responseAccountDto = new ResponseAccountDto();
+    const accounts=await this.accountModel.find().exec();
+    return accounts.map((doc)=>{
+      const responseAccountDto = new ResponseAccountDto();
         responseAccountDto._id = doc._id.toString();
         responseAccountDto.accountType = AccountType[doc.accountType];
         responseAccountDto.accountNo = doc.accountNo;
         responseAccountDto.runningTotal = doc.runningTotal;
         return responseAccountDto;
       });
-    });
+
   }
 
-  findOne(id: string): Promise<ResponseAccountDto> {
+  async findOne(id: string): Promise<ResponseAccountDto> {
     // Implementation here
-    this.accountModel.findById(id).exec();
-    return this.accountModel.findById(id).exec().then((doc)=>{
-      const responseAccountDto = new ResponseAccountDto();
-      responseAccountDto._id = doc._id.toString();
-      responseAccountDto.accountType = AccountType[doc.accountType];
-      responseAccountDto.accountNo = doc.accountNo;
-      responseAccountDto.runningTotal = doc.runningTotal;
-      return responseAccountDto;
-    });
+    const doc = await this.accountModel.findById(id).exec();
+    const responseAccountDto = new ResponseAccountDto();
+    responseAccountDto._id = doc._id.toString();
+    responseAccountDto.accountType = AccountType[doc.accountType];
+    responseAccountDto.accountNo = doc.accountNo;
+    responseAccountDto.runningTotal = doc.runningTotal;
+    return responseAccountDto;
   }
+
+
 
   async create(data: CreateAccountDto): Promise<ResponseAccountDto> {
     // Implementation here
@@ -58,26 +57,22 @@ export class AccountsService implements IAccountsService {
 
   }
 
-  update(id: string, data: UpdateAccountDto): Promise<ResponseAccountDto> {
+  async update(id: string, data: UpdateAccountDto): Promise<ResponseAccountDto> {
     // Implementation here
 
-    const updatedAccount =   this.accountModel.findByIdAndUpdate(id, data, { new: true }).exec();
-    return updatedAccount.then((doc)=>{
-      const responseAccountDto = new ResponseAccountDto();
-      responseAccountDto._id = doc._id.toString();
-      responseAccountDto.accountType = AccountType[doc.accountType];
-      responseAccountDto.accountNo = doc.accountNo;
-      responseAccountDto.runningTotal = doc.runningTotal;
-      return responseAccountDto;
-    });
-
+    const updatedAccount =   await this.accountModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    const responseAccountDto = new ResponseAccountDto();
+    responseAccountDto._id = updatedAccount._id.toString();
+    responseAccountDto.accountType = AccountType[updatedAccount.accountType];
+    responseAccountDto.accountNo = updatedAccount.accountNo;
+    responseAccountDto.runningTotal = updatedAccount.runningTotal;
+    return responseAccountDto;
   }
 
-  delete(id: string): Promise<boolean> {
+  async delete(id: string): Promise<boolean> {
     // Implementation here
-    return this.accountModel.findByIdAndDelete(id).exec().then((doc)=>{
-      return doc !== null;
-    });
+    const doc = await this.accountModel.findByIdAndDelete(id).exec();
+    return doc !== null;
   }
 
 }

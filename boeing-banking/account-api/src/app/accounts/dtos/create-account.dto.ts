@@ -4,7 +4,7 @@ import { IsNumber, IsPositive, Max, Min } from "class-validator";
 import { Matches } from "class-validator";
 import { ValidateIf } from "class-validator";
 
-enum AccountType {
+export enum AccountType {
   SAVINGS = 'SAVINGS',
   CURRENT = 'CURRENT'
 }
