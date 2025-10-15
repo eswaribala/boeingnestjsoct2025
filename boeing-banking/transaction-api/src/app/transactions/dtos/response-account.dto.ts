@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Expose } from "class-transformer";
-import { Transaction } from "../entities/transaction.entity";
+import { ResponseTransactionDto } from "./reponse-transaction.dto";
 export class ResponseAccountDto {
 
   @Expose()
@@ -14,6 +14,6 @@ export class ResponseAccountDto {
   openingDate: Date;
   @Expose()
    @ApiProperty()
-  transactions?: Transaction[];
+  transactions?: ResponseTransactionDto[];
 
 }

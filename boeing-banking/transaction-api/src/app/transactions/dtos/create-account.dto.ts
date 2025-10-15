@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Transaction } from "../entities/transaction.entity";
 import { ArrayMinSize, IsArray, IsPositive, Matches, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { CreateTransactionDto } from "./create-transaction.dto";
 
 export class CreateAccountDto {
   @IsPositive()
@@ -18,7 +18,7 @@ export class CreateAccountDto {
   @IsArray()
   @ArrayMinSize(0)
   @ValidateNested({ each: true })
-  @Type(() => Transaction)
-  transactions?: Transaction[];
+  @Type(() => CreateTransactionDto)
+  transactions?: CreateTransactionDto[];
 
 }

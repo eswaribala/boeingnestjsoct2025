@@ -1,7 +1,8 @@
-import { Account } from '../entities/account.entity';
+
 import { ApiProperty } from '@nestjs/swagger';
 import { IsPositive, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { CreateAccountDto } from './create-account.dto';
 export class CreateTransactionDto {
   @IsPositive()
   @ApiProperty({example: 500, description: 'Amount involved in the transaction' })
@@ -15,10 +16,10 @@ export class CreateTransactionDto {
   @ApiProperty({example: 2, description: 'ID of the receiver account' })
   @IsPositive()
   receiverAccountNo: number;
-  @ApiProperty({type: [Account]})
+  @ApiProperty({type: [CreateAccountDto], example: [], description: 'Account associated with the transaction' })
   @ValidateNested({each: true})
-  @Type(() => Account)
-  account: Account[];
+  @Type(() => CreateAccountDto)
+  account: CreateAccountDto[];
   //type: string;
 
 }

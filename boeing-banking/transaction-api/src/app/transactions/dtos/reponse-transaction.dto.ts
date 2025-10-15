@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Account } from '../entities/account.entity';
 import { Expose } from "class-transformer";
+import { ResponseAccountDto } from "./response-account.dto";
 export class ResponseTransactionDto {
 
     @ApiProperty()
@@ -17,5 +17,5 @@ export class ResponseTransactionDto {
     receiverAccountNo: number;
     @ApiProperty()
     @Expose()
-    account: Account[];
+    account: ResponseAccountDto[];
 }
