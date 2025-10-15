@@ -20,3 +20,14 @@ import { CurrentAccountSchema} from './entities/current-account.entity';
   controllers: [AccountsController]
 })
 export class AccountsModule {}
+/*
+@Module({
+  imports: [MongooseModule.forFeature([{ name: Account.name, schema: AccountSchema }]),MongooseModule.forFeature([{ name: 'SAVINGS', schema: SavingsAccountSchema }]),MongooseModule.forFeature([{ name: 'CURRENT', schema: CurrentAccountSchema }])  ],
+  providers: [{
+    provide: 'IAccountsService',
+    useClass: AccountsService
+  }],
+  controllers: [AccountsController]
+})
+export class AccountsModule {}
+*/

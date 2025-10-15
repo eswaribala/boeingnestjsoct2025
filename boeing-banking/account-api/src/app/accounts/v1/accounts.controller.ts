@@ -14,6 +14,7 @@ export class AccountsController {
 
   @Post()
   create(@Body() createAccountDto: CreateAccountDto) {
+    console.log('Received createAccountDto:', createAccountDto);
     return this.accountsService.create(createAccountDto);
   }
   @Get()

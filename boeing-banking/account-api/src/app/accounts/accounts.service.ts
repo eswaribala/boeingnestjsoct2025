@@ -7,8 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Account, AccountDocument } from './entities/account.entity';
 import { Model } from 'mongoose';
 import { AccountType } from './dtos/create-account.dto';
-import { SavingsAccount } from './entities/savings-account.entity';
-import { CurrentAccount } from './entities/current-account.entity';
+
 @Injectable()
 export class AccountsService implements IAccountsService {
 
@@ -23,7 +22,7 @@ export class AccountsService implements IAccountsService {
     return accounts.map((doc)=>{
       const responseAccountDto = new ResponseAccountDto();
         responseAccountDto._id = doc._id.toString();
-        responseAccountDto.accountType = AccountType[doc.accountType];
+       // responseAccountDto.accountType = AccountType[doc.accountType];
         responseAccountDto.accountNo = doc.accountNo;
         responseAccountDto.runningTotal = doc.runningTotal;
         return responseAccountDto;
@@ -36,7 +35,7 @@ export class AccountsService implements IAccountsService {
     const doc = await this.accountModel.findById(id).exec();
     const responseAccountDto = new ResponseAccountDto();
     responseAccountDto._id = doc._id.toString();
-    responseAccountDto.accountType = AccountType[doc.accountType];
+   // responseAccountDto.accountType = AccountType[doc.accountType];
     responseAccountDto.accountNo = doc.accountNo;
     responseAccountDto.runningTotal = doc.runningTotal;
     return responseAccountDto;
@@ -47,33 +46,39 @@ export class AccountsService implements IAccountsService {
   async create(data: CreateAccountDto): Promise<ResponseAccountDto> {
     // Implementation here
     console.log('Creating account with data:', data);
-    let account;
-    if (data.accountType === AccountType.SAVINGS) {
-      account = new SavingsAccount();
-      account.accountNo = data.accountNo;
-      account.runningTotal = data.runningTotal;
-      account.openingDate = data.openingDate;
-      account.accountType = data.accountType;
-      account.interestRate = data.interestRate;
-    } else if (data.accountType === AccountType.CURRENT)   {
-      account = new CurrentAccount();
-      account.accountNo = data.accountNo;
-      account.runningTotal = data.runningTotal;
-      account.openingDate = data.openingDate;
-      account.accountType = data.accountType;
-      account.overdraftLimit = data.overdraftLimit;
-    }else {
-      account = new Account();
-      Object.assign(account, data);
-    }
-    console.log('Account entity to be saved:', account);
-    const createdAccount = new this.accountModel(account);
-    const res = await createdAccount.save();
+
+    // 2) Build payload for Mongoose
+  const payload:any= {
+    accountNo: data.accountNo,
+    runningTotal: data.runningTotal,
+    openingDate: data.openingDate,
+    accountType: data.accountType,           // MUST be present
+  };
+
+  // 3) Add child-only fields based on discriminator
+  if (data.accountType === 'SAVINGS') {
+    payload.interestRate = data.interestRate;
+  } else if (data.accountType === 'CURRENT') {
+    payload.overdraftLimit = data.overdraftLimit;
+  }
+
+  console.log('Payload for Mongoose:', payload);
+ // Use the child model explicitly to guarantee schema
+    const child = this.accountModel.discriminators?.[data.accountType];
+    console.log('Using child model for type:', data.accountType, child ? 'found' : 'not found');
+    if (!child) throw new Error(`Discriminator not registered for ${data.accountType}`);
+    console.log('Using child model:', data.accountType, 'paths =', Object.keys(child.schema.paths));
+// You should see: accountNo, runningTotal, openingDate, accountType, interestRate, _id
+
+  // 4) Use the base model; discriminator will be applied automatically
+  const res = await child.create(payload);
+  console.log('Created account document (toJSON):', res.toJSON());
     const responseAccountDto = new ResponseAccountDto();
     responseAccountDto._id = (await res)._id.toString();
-    responseAccountDto.accountType = AccountType[(await res).accountType];
+    responseAccountDto.accountType = AccountType[data.accountType];
     responseAccountDto.accountNo = (await res).accountNo;
     responseAccountDto.runningTotal = (await res).runningTotal;
+
     return responseAccountDto;
 
   }
@@ -84,7 +89,7 @@ export class AccountsService implements IAccountsService {
     const updatedAccount =   await this.accountModel.findByIdAndUpdate(id, data, { new: true }).exec();
     const responseAccountDto = new ResponseAccountDto();
     responseAccountDto._id = updatedAccount._id.toString();
-    responseAccountDto.accountType = AccountType[updatedAccount.accountType];
+    //responseAccountDto.accountType = AccountType[updatedAccount.accountType];
     responseAccountDto.accountNo = updatedAccount.accountNo;
     responseAccountDto.runningTotal = updatedAccount.runningTotal;
     return responseAccountDto;
