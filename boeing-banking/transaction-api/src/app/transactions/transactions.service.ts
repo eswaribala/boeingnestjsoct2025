@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Transaction } from 'typeorm';
+import { Repository} from 'typeorm';
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
 import { ResponseTransactionDto } from './dtos/reponse-transaction.dto';
+import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
@@ -24,7 +25,7 @@ export class TransactionsService {
   }
 
   async findOne(id: number): Promise<ResponseTransactionDto> {
-    const transaction = await this.transactionRepository.findOneOrFail({ where: { transactionId: id } });
+    const transaction = await this.transactionRepository.findOne({ where: { transactionId:id } });
     const responseTransaction = new ResponseTransactionDto();
     Object.assign(responseTransaction, transaction);
     return responseTransaction;
