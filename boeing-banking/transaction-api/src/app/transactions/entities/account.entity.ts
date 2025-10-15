@@ -1,4 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Transaction } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import { Transaction } from "./transaction.entity";
 
 @Entity("accounts")
 export class Account {
@@ -10,6 +11,9 @@ export class Account {
   @Column({ name: "opening_date", type: "date", default: () => "CURRENT_DATE" })
   openingDate: Date;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.account)
+  @OneToMany(() => Transaction, (transaction) => transaction.account,{
+    cascade: ["insert", "update","remove"],
+    eager: false,
+  })
   transactions: Transaction[];
 }
