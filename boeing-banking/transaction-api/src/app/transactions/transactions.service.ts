@@ -43,7 +43,7 @@ export class TransactionsService {
 
 
 
-  async remove(id: string): Promise<boolean> {
+  async remove(id: number): Promise<boolean> {
     const response = await this.transactionRepository.delete(id);
     if (response.affected === 0) {
       throw new Error(`Transaction with ID ${id} not found`);
