@@ -11,31 +11,45 @@ export class TransactionsService {
 
   // Add your service methods here
 
-  findAll(): Promise<Transaction[]> {
-    return this.transactionRepository.find();
+  async findAll(): Promise<ResponseTransactionDto[]> {
+    const transactions = await this.transactionRepository.find();
+    const responseTransactions: ResponseTransactionDto[] = [];
+    transactions.forEach((transaction) => {
+      const responseTransaction = new ResponseTransactionDto();
+      Object.assign(responseTransaction, transaction);
+      responseTransactions.push(responseTransaction);
+    });
+
+    return responseTransactions;
   }
 
-  findOne(id: string): Promise<Transaction> {
-    return this.transactionRepository.findOneBy({ id });
+  async findOne(id: number): Promise<ResponseTransactionDto> {
+    const transaction = await this.transactionRepository.findOneOrFail({ where: { transactionId: id } });
+    const responseTransaction = new ResponseTransactionDto();
+    Object.assign(responseTransaction, transaction);
+    return responseTransaction;
   }
 
   async create(createTransactionDto: CreateTransactionDto): Promise<ResponseTransactionDto> {
     const transaction = new Transaction();
     Object.assign(transaction, createTransactionDto);
-
     const transactionResponse = this.transactionRepository.create(transaction);
     await this.transactionRepository.save(transactionResponse);
     const responseTransactionDto = new ResponseTransactionDto();
     Object.assign(responseTransactionDto, transactionResponse);
     return responseTransactionDto;
-
   }
 
-  update(id: string, transaction: Transaction): Promise<Transaction> {
-    return this.transactionRepository.save({ ...transaction, id });
+
+
+  async remove(id: string): Promise<boolean> {
+    const response = await this.transactionRepository.delete(id);
+    if (response.affected === 0) {
+      throw new Error(`Transaction with ID ${id} not found`);
+    }else{
+      console.log(`Transaction with ID ${id} deleted successfully`);
+      return true;
+    }
   }
 
-  remove(id: string): Promise<void> {
-    return this.transactionRepository.delete(id).then(() => {});
-  }
 }
