@@ -2,12 +2,13 @@ import { Column, Entity, JoinColumn, TableInheritance } from 'typeorm';
 import { Account } from './account.entity';
 import { ManyToOne } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
-
+import { PrimaryColumn } from 'typeorm';
 @Entity("transactions")
 //@TableInheritance({ column: { type: "varchar", name: "type" } })
 export class Transaction {
-  @PrimaryGeneratedColumn()
-  @Column({ name: "transaction_id", type: "bigint" })
+  @PrimaryGeneratedColumn({ name: "transaction_id", type: "bigint" })
+    //@PrimaryColumn()
+  //@Column()
   transactionId: number;
   @Column({ name: "amount", type: "decimal", precision: 10, scale: 2 })
   amount: number;

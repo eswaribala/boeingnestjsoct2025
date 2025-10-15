@@ -1,10 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import { Transaction } from "./transaction.entity";
 
 @Entity("accounts")
 export class Account {
-  @PrimaryGeneratedColumn()
-  @Column({ name: "account_no", type: "bigint" })
+  @PrimaryGeneratedColumn({ name: "account_no", type: "bigint" })
+  //@PrimaryColumn()
+  //@Column({ name: "account_no", type: "bigint" })
   accountNo: number;
   @Column({ name: "running_balance", type: "decimal", precision: 10, scale: 2 })
   runningBalance: number;
