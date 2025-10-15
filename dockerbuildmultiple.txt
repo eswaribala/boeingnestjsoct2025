@@ -1,0 +1,6 @@
+From the repo root:
+# Account API image
+docker build --build-arg APP_NAME=account-api --build-arg DIST_DIR=dist/account-api -t account-api:latest .
+
+# Transactions API image
+docker build --build-arg APP_NAME=transactions-api --build-arg DIST_DIR=dist/transactions-api -t transactions-api:latest .
