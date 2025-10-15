@@ -1,8 +1,10 @@
-import { Column, Entity, JoinColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, TableInheritance } from 'typeorm';
 import { Account } from './account.entity';
 import { ManyToOne } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
+
 @Entity("transactions")
+@TableInheritance({ column: { type: "varchar", name: "type" } })
 export class Transaction {
   @PrimaryGeneratedColumn()
   @Column({ name: "transaction_id", type: "bigint" })
