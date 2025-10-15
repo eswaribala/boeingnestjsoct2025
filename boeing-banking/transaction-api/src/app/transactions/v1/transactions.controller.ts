@@ -8,10 +8,8 @@ import { CreateTransactionDto } from '../dtos/create-transaction.dto';
 @Controller({ path: 'customers', version: '1' })
 export class TransactionsController {
 
-  private readonly transactionService:TransactionsService;
-  constructor(transactionService: TransactionsService) {
-    this.transactionService = transactionService;
-  }
+
+  constructor(private readonly transactionService: TransactionsService) {}
 
   @Post()
   createTransaction(@Body() createTransactionDto: CreateTransactionDto): Promise<ResponseTransactionDto> {
