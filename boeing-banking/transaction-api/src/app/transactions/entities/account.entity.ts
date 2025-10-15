@@ -1,13 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Transaction } from "typeorm";
 
 @Entity("accounts")
 export class Account {
   @PrimaryGeneratedColumn()
-  @Column({ type: "bigint" })
+  @Column({ name: "account_no", type: "bigint" })
   accountNo: number;
-
-  @Column("decimal", { precision: 10, scale: 2 })
+  @Column({ name: "running_balance", type: "decimal", precision: 10, scale: 2 })
   runningBalance: number;
-  @Column("date", { default: () => "CURRENT_DATE" })
+  @Column({ name: "opening_date", type: "date", default: () => "CURRENT_DATE" })
   openingDate: Date;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.account)
+  transactions: Transaction[];
 }
