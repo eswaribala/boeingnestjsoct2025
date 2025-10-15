@@ -11,12 +11,12 @@ services:
     volumes:
       - mongo_data:/data/db
     networks:
-      - banknet
+      - boeingnetwork
 
   account-api:
     build:
       context: ./  # ✅ Dockerfile is inside this folder
-      dockerfile: Dockerfile 
+      dockerfile: Dockerfile
     container_name: account-api
     ports:
       - "3001:3001"
@@ -25,11 +25,11 @@ services:
     depends_on:
       - mongodb
     networks:
-      - banknet
+      - boeingnetwork
 
 volumes:
   mongo_data:
 
 networks:
-  banknet:
+  boeingnetwork:
     driver: bridge

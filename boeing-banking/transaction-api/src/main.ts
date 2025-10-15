@@ -6,13 +6,55 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { VersioningType } from '@nestjs/common';
+import { TransactionsV1Module } from './app/transactions/transactions.v1.module';
+import { TransactionsV2Module } from './app/transactions/transactions.v2.module';
+
+const globalPrefix = 'api';
+const port = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
+
+  app.setGlobalPrefix('api');
+  app.enableVersioning({ type: VersioningType.URI }); // => /api/v1, /api/v2
+
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    transform: true,
+    forbidNonWhitelisted: true,
+    transformOptions: { enableImplicitConversion: true },
+  }));
+
+  // Swagger: V1
+  const v1 = new DocumentBuilder()
+    .setTitle('Transaction API - V1')
+    .setDescription('Endpoints for /api/v1')
+    .setVersion('1.0')
+    .build();
+  const docV1 = SwaggerModule.createDocument(app, v1, {
+    include: [TransactionsV1Module],
+    deepScanRoutes: true,
+  });
+  SwaggerModule.setup('docs/v1', app, docV1);
+
+  // Swagger: V2
+  const v2 = new DocumentBuilder()
+    .setTitle('Transaction API - V2')
+    .setDescription('Endpoints for /api/v2')
+    .setVersion('2.0')
+    .build();
+  const docV2 = SwaggerModule.createDocument(app, v2, {
+    include: [TransactionsV2Module],
+    deepScanRoutes: true,
+  });
+  SwaggerModule.setup('docs/v2', app, docV2);
+
+  await app.listen(3000);
+  console.log('Docs:', 'http://localhost:3000/docs/v1', '|', 'http://localhost:3000/docs/v2');
+
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
