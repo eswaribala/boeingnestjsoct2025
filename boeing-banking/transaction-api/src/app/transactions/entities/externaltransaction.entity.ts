@@ -1,3 +1,4 @@
+/*
 import { ChildEntity, Column } from 'typeorm';
 import { Transaction } from './transaction.entity';
 @ChildEntity("external_transactions")
@@ -11,3 +12,4 @@ export class ExternalTransaction extends Transaction{
   @Column({ name: "country", type: "varchar", length: 50 }  )
   country: string;
 }
+*/

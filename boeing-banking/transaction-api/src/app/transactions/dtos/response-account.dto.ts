@@ -7,14 +7,13 @@ export class ResponseAccountDto {
   @ApiProperty()
   accountNo: number;
   @Expose()
- @ApiProperty()
+  @ApiProperty()
   runningBalance: number;
   @Expose()
- @ApiProperty()
+  @ApiProperty()
   openingDate: Date;
   @Expose()
    @ApiProperty()
-
   transactions?: Transaction[];
 
 }

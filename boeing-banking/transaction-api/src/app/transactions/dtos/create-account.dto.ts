@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transaction } from "../entities/transaction.entity";
-import { ArrayMinSize, IsArray, IsPositive, Matches } from "class-validator";
+import { ArrayMinSize, IsArray, IsPositive, Matches, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
 export class CreateAccountDto {
   @IsPositive()
@@ -16,6 +17,8 @@ export class CreateAccountDto {
   @ApiProperty({example: [], description: 'List of transactions associated with the account' })
   @IsArray()
   @ArrayMinSize(0)
+  @ValidateNested({ each: true })
+  @Type(() => Transaction)
   transactions?: Transaction[];
 
 }

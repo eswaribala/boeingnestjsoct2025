@@ -4,7 +4,7 @@ import { ManyToOne } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity("transactions")
-@TableInheritance({ column: { type: "varchar", name: "type" } })
+//@TableInheritance({ column: { type: "varchar", name: "type" } })
 export class Transaction {
   @PrimaryGeneratedColumn()
   @Column({ name: "transaction_id", type: "bigint" })
