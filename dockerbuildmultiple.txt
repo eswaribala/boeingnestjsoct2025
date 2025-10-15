@@ -3,4 +3,4 @@ From the repo root:
 docker build --build-arg APP_NAME=account-api --build-arg DIST_DIR=dist/account-api -t account-api:latest .
 
 # Transactions API image
-docker build --build-arg APP_NAME=transactions-api --build-arg DIST_DIR=dist/transaction-api -t transaction-api:latest .
+docker build --build-arg APP_NAME=transaction-api --build-arg DIST_DIR=dist/transaction-api -t transaction-api:latest .
