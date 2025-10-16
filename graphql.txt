@@ -1,6 +1,13 @@
 #create use api project
 nest new my-nest-app
 #create subfolder users under src
+#if you want to use nest
+nest g module users
+nest g resolver users --no-spec
+nest g service users --no-spec
+
+
+
 #if you are in project folder
 npx nx g @nx/nest:module users
 npx nx g @nx/nest:resolver users --no-spec
