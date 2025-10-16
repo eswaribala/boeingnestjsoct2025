@@ -60,3 +60,21 @@ export class UpdateBookInput {
 npm i @as-integrations/express5
 npm run start:dev
 Open http://localhost:3000/graphql 
+
+==================================
+mutation($input:CreateUserInput!){
+  createUser(input:$input){
+     userId
+  }
+}
+
+Input---Query variable
+{
+  "input": {
+     "firstName":"Paramswari",
+    "lastName":"Bala",
+    "email":"param@gmail.com",
+    "contactNumber":9952032862,
+    "password":"Test@123"
+  }
+}
