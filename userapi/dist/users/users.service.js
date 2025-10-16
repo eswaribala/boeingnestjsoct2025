@@ -8,7 +8,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
+const faker_1 = require("@faker-js/faker");
 let UsersService = class UsersService {
+    users = [];
+    create(user) {
+        const newUser = {
+            userId: faker_1.faker.number.int({ min: 1, max: 1000 }),
+            ...user
+        };
+        this.users.push(newUser);
+        return newUser;
+    }
+    findAll() {
+        return this.users;
+    }
+    findOne(id) {
+        return this.users.find(user => user.userId === id);
+    }
+    update(input) {
+        const user = this.findOne(input.userId);
+        if (!user)
+            return undefined;
+        Object.assign(user, input);
+        return user;
+    }
+    remove(id) {
+        const user = this.findOne(id);
+        this.users = this.users.filter(user => user.userId !== id);
+        return user;
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

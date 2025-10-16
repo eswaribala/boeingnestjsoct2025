@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserInput, User } from './dto/user.type';
+import { CreateUserInput, UpdateUserInput, User } from './dto/user.type';
 import { randomUUID } from 'crypto';
 import { faker } from '@faker-js/faker';
 
@@ -15,5 +15,21 @@ export class UsersService {
         return newUser;
     }
 
-      
+    findAll():User[]{
+        return this.users;
+    }
+    findOne(id:number):User | undefined {
+        return this.users.find(user=>user.userId===id);
+    }
+    update(input:UpdateUserInput):User | undefined {
+        const user=this.findOne(input.userId);
+        if(!user)return undefined;
+        Object.assign(user,input);
+        return user;
+    }
+    remove(id:number):User | undefined {
+        const user=this.findOne(id);
+        this.users=this.users.filter(user=>user.userId!==id);
+        return user;
+    }
 }

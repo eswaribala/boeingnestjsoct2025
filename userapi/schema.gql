@@ -1,0 +1,43 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+input CreateUserInput {
+  contactNumber: BigInt!
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  removeUser(id: ID!): Boolean!
+  updateUser(input: UpdateUserInput!): User
+}
+
+type Query {
+  user(id: ID!): User
+  users: [User!]!
+}
+
+input UpdateUserInput {
+  contactNumber: BigInt!
+  email: String!
+  password: String!
+  userId: ID!
+}
+
+type User {
+  contactNumber: BigInt!
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  userId: ID!
+}

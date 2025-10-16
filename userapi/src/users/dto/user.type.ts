@@ -1,6 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { ID, ObjectType,Int} from "@nestjs/graphql";
 import { IsNotEmpty, Matches } from "class-validator";
+import { GraphQLBigInt } from "graphql-scalars";
 
 @ObjectType()
 export class User{
@@ -9,7 +10,7 @@ export class User{
    @Field(()=>String) lastName:string;
    @Field(()=>String) email:string;
    @Field(()=>String) password:string;
-   @Field(()=>BigInt) contactNumber:number;
+   @Field(()=>GraphQLBigInt) contactNumber:number;
 
 }
 
@@ -31,7 +32,7 @@ export class CreateUserInput{
     @IsNotEmpty() 
     @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, { message: 'Password must be at least 8 characters long and contain both letters and numbers' }) 
     password:string;
-    @Field(()=>BigInt) 
+    @Field(()=>GraphQLBigInt)
     @IsNotEmpty() 
     @Matches(/^\d{10}$/, { message: 'Contact number must be a valid 10-digit number' }) 
     contactNumber:number;
@@ -50,6 +51,6 @@ export class UpdateUserInput{
     @IsNotEmpty() 
     @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, { message: 'Password must be at least 8 characters long and contain both letters and numbers' }) 
     password:string;
-    @Field(()=>BigInt) @IsNotEmpty() @Matches(/^\d{10}$/, { message: 'Contact number must be a valid 10-digit number' }) 
+   @Field(()=>GraphQLBigInt) @IsNotEmpty() @Matches(/^\d{10}$/, { message: 'Contact number must be a valid 10-digit number' }) 
     contactNumber:number;
 }

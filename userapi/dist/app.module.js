@@ -13,6 +13,7 @@ const app_service_1 = require("./app.service");
 const users_module_1 = require("./users/users.module");
 const graphql_1 = require("@nestjs/graphql");
 const apollo_1 = require("@nestjs/apollo");
+const graphql_scalars_1 = require("graphql-scalars");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -24,6 +25,7 @@ exports.AppModule = AppModule = __decorate([
                 playground: true,
                 sortSchema: true,
                 path: '/graphql',
+                resolvers: { BigInt: graphql_scalars_1.BigIntResolver }
             }),],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
