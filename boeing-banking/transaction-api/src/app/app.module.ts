@@ -5,8 +5,9 @@ import { TransactionsV1Module } from './transactions/transactions.v1.module';
 import { TransactionsV2Module } from './transactions/transactions.v2.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AccountModule } from './transactions/account.module';
 @Module({
-  imports: [TransactionsV1Module, TransactionsV2Module,
+  imports: [TransactionsV1Module, TransactionsV2Module,AccountModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],

@@ -12,13 +12,6 @@ export class CreateAccountDto {
   runningBalance: number;
   @Matches(/^\d{4}-\d{2}-\d{2}$/, { message: 'openingDate must be in YYYY-MM-DD format' })
   @ApiProperty({example: '2023-10-01', description: 'Date when the account was opened' })
-  openingDate: Date;
-
-  @ApiProperty({example: [], description: 'List of transactions associated with the account' })
-  @IsArray()
-  @ArrayMinSize(0)
-  @ValidateNested({ each: true })
-  @Type(() => CreateTransactionDto)
-  transactions?: CreateTransactionDto[];
+  openingDate: string;
 
 }

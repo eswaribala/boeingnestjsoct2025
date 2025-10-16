@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.7
 
-ARG APP_NAME=account-api
-ARG DIST_DIR=dist/account-api   # override to dist/apps/account-api if you prefer
-
+ARG APP_NAME
+ARG DIST_DIR   # override to dist/apps/account-api if you prefer
+ARG PORT
 # --- deps ---
 FROM node:20-alpine AS deps
 WORKDIR /workspace
@@ -15,14 +15,14 @@ WORKDIR /workspace
 COPY --from=deps /workspace/node_modules ./node_modules
 # nx + tsconfig + sources
 COPY package.json package-lock.json nx.json tsconfig.base.json tsconfig.base.json ./
-COPY account-api ./account-api
+COPY ${APP_NAME} ./${APP_NAME}
 # If you actually have libs, uncomment:
 # COPY libs ./libs
 
 # 👇 FORCE Nx to emit exactly where we will copy from
-ARG APP_NAME=account-api
-ARG DIST_DIR=dist/account-api
-RUN npx --yes nx@latest build ${APP_NAME} 
+ARG APP_NAME
+ARG DIST_DIR
+RUN npx --yes nx@latest build ${APP_NAME}
 
 # (optional) show where files landed
 RUN echo "Built to: ${DIST_DIR}" && (ls -la ${DIST_DIR} || (echo "Nothing in ${DIST_DIR}"; ls -R dist || true; exit 1))
@@ -38,7 +38,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=prod-deps /workspace/node_modules ./node_modules
-ARG DIST_DIR=dist/account-api
+ARG DIST_DIR
 COPY --from=builder /workspace/${DIST_DIR} ./dist
-EXPOSE 3001
+EXPOSE ${PORT}
 CMD ["node", "dist/main.js"]

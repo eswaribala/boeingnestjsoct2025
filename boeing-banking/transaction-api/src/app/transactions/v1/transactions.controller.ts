@@ -5,7 +5,7 @@ import { Body, Post,Get,Delete } from '@nestjs/common';
 import { ResponseTransactionDto } from '../dtos/reponse-transaction.dto';
 import { CreateTransactionDto } from '../dtos/create-transaction.dto';
 @ApiTags('transactions')
-@Controller({ path: 'customers', version: '1' })
+@Controller({ path: 'transactions', version: '1' })
 export class TransactionsController {
 
 
@@ -13,6 +13,7 @@ export class TransactionsController {
 
   @Post()
   createTransaction(@Body() createTransactionDto: CreateTransactionDto): Promise<ResponseTransactionDto> {
+    console.log('Received CreateTransactionDto:', createTransactionDto);
     return this.transactionService.create(createTransactionDto);
   }
 

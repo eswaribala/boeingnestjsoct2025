@@ -11,7 +11,7 @@ export class ResponseAccountDto {
   runningBalance: number;
   @Expose()
   @ApiProperty()
-  openingDate: Date;
+  openingDate: string;
   @Expose()
    @ApiProperty()
   transactions?: ResponseTransactionDto[];

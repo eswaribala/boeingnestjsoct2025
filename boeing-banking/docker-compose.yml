@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   mongodb:
     image: mongo:latest
@@ -12,11 +10,28 @@ services:
       - mongo_data:/data/db
     networks:
       - boeingnetwork
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: transactiondb
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:                        # 👈 required for depends_on: condition: service_healthy
+      test: ["CMD-SHELL", "pg_isready -U postgres -d transactiondb"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    
 
   account-api:
-    build:
-      context: ./  # ✅ Dockerfile is inside this folder
-      dockerfile: Dockerfile
+    image: account-api:latest
     container_name: account-api
     ports:
       - "3001:3001"
@@ -26,10 +41,30 @@ services:
       - mongodb
     networks:
       - boeingnetwork
-
-volumes:
-  mongo_data:
+  transaction-api:
+    image: transaction-api:latest
+    container_name: transaction-api
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: transactiondb
+      # If you pass host/URL, ensure:
+      DB_HOST: host.docker.internal
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/transactiondb
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy   # 👈 matches the service key
+    restart: unless-stopped
+    networks:
+      - boeingnetwork
 
 networks:
   boeingnetwork:
     driver: bridge
+volumes:
+  mongo_data:
+  pgdata:

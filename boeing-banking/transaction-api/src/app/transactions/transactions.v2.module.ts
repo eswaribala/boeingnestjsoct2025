@@ -1,12 +1,14 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './v2/transactions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
-import { Account } from './entities/account.entity';
+import { AccountModule } from './account.module';
+
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Transaction,Account])],
+  imports: [TypeOrmModule.forFeature([Transaction]),forwardRef(() => AccountModule)],
   providers: [TransactionsService],
   controllers: [TransactionsController]
 })

@@ -8,7 +8,7 @@ export class ResponseTransactionDto {
     amount: number;
     @ApiProperty()
     @Expose()
-    date: Date;
+    transactionDate: Date;
     @ApiProperty()
     @Expose()
     senderAccountNo: number;

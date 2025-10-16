@@ -13,7 +13,7 @@ export class Transaction {
   @Column({ name: "amount", type: "decimal", precision: 10, scale: 2 })
   amount: number;
   @Column({ name: "transaction_date", type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  date: Date;
+  transactionDate: Date;
   @Column({ name: "sender_account_no", type: "bigint" })
   senderAccountNo: number;
   @Column({ name: "receiver_account_no", type: "bigint" })
