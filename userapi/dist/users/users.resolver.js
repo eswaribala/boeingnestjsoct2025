@@ -51,7 +51,7 @@ __decorate([
     (0, graphql_2.Query)(() => user_type_1.User, { name: 'user', nullable: true }),
     __param(0, (0, graphql_2.Args)('id', { type: () => graphql_2.ID })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersResolver.prototype, "getUser", null);
 __decorate([
@@ -72,7 +72,7 @@ __decorate([
     (0, graphql_2.Mutation)(() => Boolean),
     __param(0, (0, graphql_2.Args)('id', { type: () => graphql_2.ID })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersResolver.prototype, "removeUser", null);
 exports.UsersResolver = UsersResolver = __decorate([

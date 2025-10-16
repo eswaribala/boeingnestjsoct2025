@@ -1,5 +1,5 @@
 export declare class User {
-    userId: number;
+    userId: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -14,7 +14,7 @@ export declare class CreateUserInput {
     contactNumber: number;
 }
 export declare class UpdateUserInput {
-    userId: number;
+    userId: string;
     email: string;
     password: string;
     contactNumber: number;

@@ -15,7 +15,7 @@ constructor(private readonly service: UsersService) {}
   }
 
   @Query(() => User, { name: 'user', nullable: true })
-  getUser(@Args('id', { type: () => ID }) id: number) {
+  getUser(@Args('id', { type: () => ID }) id: string) {
     return this.service.findOne(id);
   }
 
@@ -30,7 +30,7 @@ constructor(private readonly service: UsersService) {}
   }
 
   @Mutation(() => Boolean)
-  removeUser(@Args('id', { type: () => ID }) id: number) {
+  removeUser(@Args('id', { type: () => ID }) id: string) {
     return this.service.remove(id);
   }
 }

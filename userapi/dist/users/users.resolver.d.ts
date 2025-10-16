@@ -6,8 +6,8 @@ export declare class UsersResolver {
     private readonly service;
     constructor(service: UsersService);
     getUsers(): User[];
-    getUser(id: number): User | undefined;
+    getUser(id: string): User | undefined;
     createUser(input: CreateUserInput): User;
     updateUser(input: UpdateUserInput): User | undefined;
-    removeUser(id: number): User | undefined;
+    removeUser(id: string): User | undefined;
 }

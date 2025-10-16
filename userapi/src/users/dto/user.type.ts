@@ -5,7 +5,7 @@ import { GraphQLBigInt } from "graphql-scalars";
 
 @ObjectType()
 export class User{
-   @Field(()=>ID) userId:number;
+   @Field(()=>ID) userId:string;
    @Field(()=>String) firstName:string;
    @Field(()=>String) lastName:string;
    @Field(()=>String) email:string;
@@ -42,7 +42,7 @@ export class CreateUserInput{
 export class UpdateUserInput{
     @Field(()=>ID) 
     @IsNotEmpty() 
-    userId:number;
+    userId:string;
     @Field(()=>String) 
     @IsNotEmpty()
     @Matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, { message: 'Email must be a valid email address' }) 

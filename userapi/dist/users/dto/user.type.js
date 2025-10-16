@@ -25,7 +25,7 @@ let User = class User {
 exports.User = User;
 __decorate([
     (0, graphql_1.Field)(() => graphql_2.ID),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], User.prototype, "userId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
@@ -101,7 +101,7 @@ exports.UpdateUserInput = UpdateUserInput;
 __decorate([
     (0, graphql_1.Field)(() => graphql_2.ID),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], UpdateUserInput.prototype, "userId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),

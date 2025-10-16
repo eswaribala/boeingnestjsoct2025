@@ -8,7 +8,7 @@ export class UsersService {
     users:User[]=[];
     create(user:CreateUserInput):User{
         const newUser:User={
-            userId: faker.number.int({min:1,max:1000}),
+            userId: randomUUID(),
             ...user
         };
         this.users.push(newUser);
@@ -18,7 +18,13 @@ export class UsersService {
     findAll():User[]{
         return this.users;
     }
-    findOne(id:number):User | undefined {
+    findOne(id:string):User | undefined  {
+        console.log(typeof id);
+        this.users.forEach(user => {
+            console.log(typeof user.userId);
+           console.log(user.userId);
+        });
+
         return this.users.find(user=>user.userId===id);
     }
     update(input:UpdateUserInput):User | undefined {
@@ -27,7 +33,7 @@ export class UsersService {
         Object.assign(user,input);
         return user;
     }
-    remove(id:number):User | undefined {
+    remove(id:string):User | undefined {
         const user=this.findOne(id);
         this.users=this.users.filter(user=>user.userId!==id);
         return user;
