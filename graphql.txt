@@ -13,6 +13,10 @@ npx nx g @nx/nest:module users
 npx nx g @nx/nest:resolver users --no-spec
 npx nx g @nx/nest:service users --no-spec
 
+#install graphql lib
+npm i @nestjs/graphql @nestjs/apollo graphql graphql-tag class-validator class-transformer
+
+
 
 npm run start:dev
 Open http://localhost:3000/graphql 
