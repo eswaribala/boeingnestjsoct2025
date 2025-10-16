@@ -1,11 +1,16 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { IAccountsService } from '../accounts.service.interface';
 import { CreateAccountDto } from '../dtos/create-account.dto';
 import { UpdateAccountDto } from '../dtos/update-account.dto';
 import { Body, Post, Get, Param, Patch, Delete, Inject } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 @ApiTags('accounts')
 @Controller({ version: '1', path: 'accounts' })
+@Roles('USER')
+@UseGuards(JwtAuthGuard, RolesGuard) // protect all routes in this controller
 export class AccountsController {
 
    constructor(
@@ -13,6 +18,7 @@ export class AccountsController {
   ) {}
 
   @Post()
+
   create(@Body() createAccountDto: CreateAccountDto) {
     console.log('Received createAccountDto:', createAccountDto);
     return this.accountsService.create(createAccountDto);
