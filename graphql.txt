@@ -57,6 +57,6 @@ export class UpdateBookInput {
 
 #install faker library
  npm install @faker-js/faker
-
+npm i @as-integrations/express5
 npm run start:dev
 Open http://localhost:3000/graphql 
