@@ -55,6 +55,8 @@ export class UpdateBookInput {
   @Field(() => Int, { nullable: true }) pages?: number;
 }
 
+#install faker library
+ npm install @faker-js/faker
 
 npm run start:dev
 Open http://localhost:3000/graphql 
