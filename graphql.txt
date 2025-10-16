@@ -2,9 +2,9 @@
 nest new my-nest-app
 #create subfolder users under src
 #if you are in project folder
-npx nx g @nx/nest:module books
-npx nx g @nx/nest:resolver books --no-spec
-npx nx g @nx/nest:service books --no-spec
+npx nx g @nx/nest:module users
+npx nx g @nx/nest:resolver users --no-spec
+npx nx g @nx/nest:service users --no-spec
 
 
 npm run start:dev
