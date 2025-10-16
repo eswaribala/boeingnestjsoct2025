@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { BigIntResolver } from 'graphql-scalars';
 
 @Module({
   imports: [UsersModule, GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -12,6 +13,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     playground: true,
     sortSchema: true,
     path: '/graphql',
+    resolvers: {BigInt: BigIntResolver}
   }),],
   controllers: [AppController],
   providers: [AppService],
