@@ -27,5 +27,34 @@ GraphQLModule.forRoot<ApolloDriverConfig>({
   }),
 
 
+#create dto
+// src/books/dto/book.types.ts
+import { Field, ID, ObjectType, InputType, Int } from '@nestjs/graphql';
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
+
+@ObjectType()
+export class Book {
+  @Field(() => ID) id: string;
+  @Field() title: string;
+  @Field() author: string;
+  @Field(() => Int) pages: number;
+}
+
+@InputType()
+export class CreateBookInput {
+  @Field() @IsString() @IsNotEmpty() title: string;
+  @Field() @IsString() @IsNotEmpty() author: string;
+  @Field(() => Int) @IsInt() @Min(1) pages: number;
+}
+
+@InputType()
+export class UpdateBookInput {
+  @Field(() => ID) id: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() title?: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() author?: string;
+  @Field(() => Int, { nullable: true }) pages?: number;
+}
+
+
 npm run start:dev
 Open http://localhost:3000/graphql 
