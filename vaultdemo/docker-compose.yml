@@ -16,7 +16,7 @@ services:
       JWT_ALG: RS256
       KEYCLOAK_BASE_URL: http://host.docker.internal:8080
       KEYCLOAK_REALM: master
-      KEYCLOAK_CLIENT_ID: yhLDIr3hH1wI1Mg6G8Jp8W0PeXCDV7gh
+      KEYCLOAK_CLIENT_ID: z2UT8V6xSlWyhU33pvFV07TLpHDF5TRX
 
     ports:
       - "3000:3000"

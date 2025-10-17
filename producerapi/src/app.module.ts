@@ -2,16 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
-import { PublisherService } from './publisher.service';
-import { EventsListenerModule } from './listeners/events-listener.module';
+
 @Module({
   imports: [RabbitMQModule.forRoot({
   uri: process.env.AMQP_URL ?? 'amqp://guest:guest@host.docker.internal:5672',
   connectionInitOptions: { wait: true, timeout: 5000 },
   prefetchCount: 10,
-  exchanges: [{ name: 'bank.events', type: 'topic' }],
-}),EventsListenerModule],
+  exchanges: [{ name: 'shopping.events', type: 'topic' }],
+})],
   controllers: [AppController],
-  providers: [AppService,PublisherService],
+  providers: [AppService],
 })
 export class AppModule {}
