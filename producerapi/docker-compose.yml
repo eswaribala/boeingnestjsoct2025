@@ -1,0 +1,17 @@
+services:   
+  producer-api:
+    image: producer-api:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile      
+    container_name: producer-api
+    
+    ports:
+      - "3005:3005"
+    environment:
+      - AMQP_URL=amqp://guest:guest@host.docker.internal:5672
+
+networks:
+  default:
+    external: 
+      name: boeingnetwork
