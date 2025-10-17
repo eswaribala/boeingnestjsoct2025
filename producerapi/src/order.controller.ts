@@ -1,4 +1,4 @@
-import { Controller, Post } from "@nestjs/common";
+import { Controller, Post,Body } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { OrderPublishService } from "./order-publish.service";
 import { OrderDto } from "./dto/order.dto";
@@ -11,7 +11,7 @@ export class OrderController {
 
     @Post()
     @ApiOperation({ summary: 'Create a new order and publish an event' })
-    public async createOrder(order: OrderDto) {
+    public async createOrder(@Body() order: OrderDto) {
         const result = await this.orderPublishService.publishOrderCreated(order);
         return result;
     }

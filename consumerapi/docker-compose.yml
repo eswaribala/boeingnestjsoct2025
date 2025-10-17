@@ -1,0 +1,17 @@
+services:   
+  consumer-api:
+    image: consumer-api:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile      
+    container_name: consumer-api
+    
+    ports:
+      - "3006:3006"
+    environment:
+      - AMQP_URL=amqp://guest:guest@host.docker.internal:5672
+
+networks:
+  default:
+    external: 
+      name: boeingnetwork

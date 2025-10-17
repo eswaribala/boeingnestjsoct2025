@@ -10,7 +10,7 @@ export class OrderPublishService {
 
     public async publishOrderCreated(order: OrderDto) {
         const routingKey = 'order.created';
-        this.amqpConnection.publish(routingKey, 'shopping.events', order,{
+        this.amqpConnection.publish('shopping.events', routingKey, order, {
             persistent: true,
             headers: { eventType: 'OrderCreated' },
             contentType: 'application/json',
