@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { OrderController } from './order.controller';
+import { OrderPublishService } from './order-publish.service';
 
 @Module({
   imports: [RabbitMQModule.forRoot({
@@ -10,7 +12,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
   prefetchCount: 10,
   exchanges: [{ name: 'shopping.events', type: 'topic' }],
 })],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, OrderController],
+  providers: [AppService, OrderPublishService],
 })
 export class AppModule {}
