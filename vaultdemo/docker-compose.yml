@@ -1,0 +1,29 @@
+services:   
+  vaultdemo-api:
+    image: vaultdemo-api:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile      
+    container_name: vaultdemo-api
+    environment:
+      VAULT_ADDR: "http://vault:8200"          # or your URL
+      #VAULT_NAMESPACE: ""                      # set only if using namespaces
+      VAULT_MOUNT: "secret"                    # KV mount name
+      VAULT_KV_VERSION: "2"                    # "1" or "2"
+      VAULT_SECRET_PATH: "mongosecret"    # the secret path inside the mount
+      NODE_ENV: production
+      PORT: 3000
+      JWT_ALG: RS256
+      KEYCLOAK_BASE_URL: http://host.docker.internal:8080
+      KEYCLOAK_REALM: master
+      KEYCLOAK_CLIENT_ID: yhLDIr3hH1wI1Mg6G8Jp8W0PeXCDV7gh
+
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+
+networks:
+  default:
+    external: 
+      name: boeingnetwork

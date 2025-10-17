@@ -9,7 +9,7 @@ import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 @ApiTags('accounts')
 @Controller({ version: '1', path: 'accounts' })
-@Roles('USER')
+@Roles('DEVELOPER','ADMIN','USER') // only users with these roles can access
 @UseGuards(JwtAuthGuard, RolesGuard) // protect all routes in this controller
 export class AccountsController {
 
