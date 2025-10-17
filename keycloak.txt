@@ -1,0 +1,4 @@
+#redirect uri
+http://localhost:3000/docs/oauth2-redirect.html
+#web origin
+http://localhost:3000
